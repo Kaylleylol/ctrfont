@@ -71,7 +71,7 @@ jobs:
       - name: Run FontTool
         run: |
           cd fonttool
-          python3 fonttool/FontTool.py -font fonttool/SystemFont.bcfnt
+          python3 FontTool.py -font SystemFont.bcfnt
 
       - name: Upload CIA artifact
         uses: actions/upload-artifact@v4
