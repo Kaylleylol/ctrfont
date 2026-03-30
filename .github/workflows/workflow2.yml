@@ -68,14 +68,9 @@ jobs:
             -s ${{ github.event.inputs.font_size }} \
             mergefonts/merged_font.ttf
 
-      - name: Find Python...
-        run: which python || true
-             which python3 || true
-             ls /usr/bin/python* || true
-             pacman -Qs python || true
-
       - name: Run FontTool
         run: python3 fonttool/FontTool.py -font fonttool/SystemFont.bcfnt
+        working-directory: fonttool
 
       - name: Upload CIA artifact
         uses: actions/upload-artifact@v4
