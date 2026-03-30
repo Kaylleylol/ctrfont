@@ -81,7 +81,8 @@ jobs:
       - name: Convert TTF to BCFNT
         shell: pwsh
         run: |
-          ./ctr_FontConverterConsole.exe -i win -in "${{ env.FONT_NAME }}" `
+          $D = "${{ github.workspace }}"
+          & "$D\ctr_FontConverterConsole.exe" -i win -in "${{ env.FONT_NAME }}" `
             -is ${{ github.event.inputs.font_size }} `
             -ic A4 `
             -o bcfnt -of fonttool/SystemFont.bcfnt `
