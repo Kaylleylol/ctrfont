@@ -20,18 +20,28 @@ jobs:
       - name: Add devkitPro pacman repository
         shell: msys2 {0}
         run: |
-          curl -LO https://pkg.devkitpro.org/devkitpro-keyring.pkg.tar.xz
-          pacman -U --noconfirm devkitpro-keyring.pkg.tar.xz
-          echo "[dkp-libs]" >> /etc/pacman.conf
-          echo "Server = https://pkg.devkitpro.org/packages" >> /etc/pacman.conf
-          echo "[dkp-windows]" >> /etc/pacman.conf
-          echo "Server = https://pkg.devkitpro.org/packages/windows" >> /etc/pacman.conf
+          pacman -U --noconfirm https://downloads.devkitpro.org/devkitpro-keyring.pkg.tar.xz
+          cat >> /etc/pacman.conf << 'EOF'
+          [dkp-libs]
+          Server = https://downloads.devkitpro.org/packages
+          [dkp-windows]
+          Server = https://downloads.devkitpro.org/packages/windows
+          EOF
           pacman -Sy
 
       - name: Install 3ds-dev
         shell: msys2 {0}
         run: pacman -S --noconfirm 3ds-dev
 
+      - name: Set devkitPro environment
+        shell: msys2 {0}
+        run: |
+          export PATH="$PATH:/opt/devkitpro/tools/bin"
+          export DEVKITPRO=/opt/devkitpro
+          export DEVKITARM=/opt/devkitpro/devkitARM
+
       - name: Verify mkbcfnt
         shell: msys2 {0}
-        run: mkbcfnt --version || mkbcfnt --help
+        run: |
+          export PATH="$PATH:/opt/devkitpro/tools/bin"
+          mkbcfnt --version || mkbcfnt --help
