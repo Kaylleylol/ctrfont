@@ -30,6 +30,7 @@ jobs:
         run: curl -L "${{ github.event.inputs.font_url }}" -o mergefonts/custom_font.ttf
 
       - name: Merge custom font w/ nintendo_NTLG-DB_001.ttf
+        shell: cmd
         run: |
           fontforge/bin/fontforge.exe mergefonts/merge-fonts.py \
             mergefonts/custom_font.ttf \
