@@ -20,14 +20,19 @@ jobs:
       - name: Add devkitPro pacman repository
         shell: msys2 {0}
         run: |
-          pacman -U --noconfirm https://downloads.devkitpro.org/devkitpro-keyring.pkg.tar.xz
+          curl -LO https://downloads.devkitpro.org/devkitpro-keyring.pkg.tar.xz
+          pacman -U --noconfirm --nodeps --needed devkitpro-keyring.pkg.tar.xz || true
           cat >> /etc/pacman.conf << 'EOF'
+
           [dkp-libs]
+          SigLevel = Optional TrustAll
           Server = https://downloads.devkitpro.org/packages
+
           [dkp-windows]
+          SigLevel = Optional TrustAll
           Server = https://downloads.devkitpro.org/packages/windows
           EOF
-          pacman -Sy
+          pacman -Sy --noconfirm
 
       - name: Install 3ds-dev
         shell: msys2 {0}
