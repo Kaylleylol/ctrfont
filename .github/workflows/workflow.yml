@@ -11,12 +11,15 @@ on:
         required: true
         default: '20'
       font_name:
-        description: 'Output name (e.g. PopHappiness)'
+        description: 'Font name (e.g. PopHappiness)'
         required: true
 
 defaults:
   run:
     shell: pwsh
+    
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -41,7 +44,9 @@ jobs:
         run: |
           pip install fonttools --quiet
           $fontName = python3 -c "from fontTools.ttLib import TTFont; tt = TTFont('mergefonts/merged_font.ttf'); print(tt['name'].getDebugName(1))"
+          $fontSlug = $fontName -replace '\s+', '-'
           echo "FONT_NAME=$fontName" >> $env:GITHUB_ENV
+          echo "FONT_NAME_SLUG=$fontSlug" >> $env:GITHUB_ENV
           
       - name: Install merged font to Windows
         run: |
@@ -66,11 +71,33 @@ jobs:
           cd fonttool
           python3 FontTool.py -font SystemFont.bcfnt
           exit 0
+          
+      - name: Generate font preview
+        run: |
+          pip install pillow --quiet
+          python3 -c "
+          from PIL import Image, ImageDraw, ImageFont
+          import os
+          img = Image.new('RGB', (200, 100), color='white')
+          draw = ImageDraw.Draw(img)
+          font = ImageFont.truetype('C:/Windows/Fonts/merged_font.ttf', 72)
+          draw.text((20, 10), 'Aa', font=font, fill='black')
+          os.makedirs('fonts/previews', exist_ok=True)
+          img.save('fonts/previews/${{ env.FONT_NAME }}.png')
+          "
 
-      - name: Upload CIA artifact
-        uses: actions/upload-artifact@v4
+      - name: Commit preview to repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add fonts/previews/
+          git diff --staged --quiet || git commit -m "Add preview for ${{ env.FONT_NAME }}"
+          git push
+
+      - name: Publish font as release
+        uses: softprops/action-gh-release@v2
         with:
-          name: ${{ github.event.inputs.font_name }}Font
-          path: |
-            fonttool/SystemFont.cia
-            mergefonts/merged_font.ttf
+          tag_name: ${{ env.FONT_NAME_SLUG }}
+          name: ${{ env.FONT_NAME }}
+          files: fonttool/SystemFont.cia
+
