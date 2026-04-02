@@ -13,6 +13,10 @@ Custom firmware (CFW) is required to install custom fonts. You can setup custom 
 ### Fonts
 There are currently **??** fonts available.
 
+#### Installing Custom Fonts
+
+#### Uninstalling Custom Fonts 
+
 ### Screenshots
 Here are some previews of how you can style your 3DS with custom fonts!
 
