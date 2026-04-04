@@ -4,14 +4,14 @@ on:
   workflow_dispatch:
     inputs:
       font_url:
-        description: 'URL to a TTF/OTF font file'
+        description: 'URL to a .TTF/.OTF font file'
         required: true
       font_size:
         description: 'Font Size (px)'
         required: true
         default: '20'
       font_name:
-        description: 'Font Display Name (e.g. Pop Happiness)'
+        description: 'Font Display Name'
         required: true
 
 defaults:
@@ -111,6 +111,6 @@ jobs:
           name: ${{ github.event.inputs.font_name }}
           body: |
             ### Preview
-            ![Preview](https://github.com/sinceohsix/ctrfonts/blob/main/fonts/previews/${{ env.FONT_NAME_SLUG }}.png?raw=true)
+            ![${{ github.event.inputs.font_name }} Preview](https://github.com/${{ github.repository }}/blob/main/fonts/previews/${{ env.FONT_NAME_SLUG }}.png?raw=true)
           files: fonttool/SystemFont.cia
 
