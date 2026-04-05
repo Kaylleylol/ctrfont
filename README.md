@@ -21,7 +21,7 @@ Custom firmware (CFW) is required to install custom fonts. You can setup custom 
 5. [Special Thanks](#special-thanks)
 
 ## Fonts
-There are currently **4** fonts available.  
+There are currently **5** fonts available.  
 [Installing Custom Fonts](#installing-custom-fonts) · [Uninstalling Custom Fonts](#uninstalling-custom-fonts)
 
 | Preview | Font | Download |
@@ -30,6 +30,7 @@ There are currently **4** fonts available.
 | ![Font](/fonts/previews/MARIO-MAKER.png) | MARIO MAKER | [Download](https://github.com/sinceohsix/ctrfonts/releases/download/MARIO-MAKER/SystemFont.cia) |
 | ![Font](/fonts/previews/Zelda-Glyphs-v2-Deco.png) | Zelda Glyphs | [Download](https://github.com/sinceohsix/ctrfonts/releases/download/Zelda-Glyphs-v2-Deco/SystemFont.cia) |
 | ![Font](/fonts/previews/Determination-Sans.png) | DETERMINATION Sans | [Download](https://github.com/sinceohsix/ctrfonts/releases/download/Determination-Sans/SystemFont.cia) |
+| ![Font](/fonts/previews/JetBrains-Mono.png) | JetBrains Mono | [Download](https://github.com/sinceohsix/ctrfonts/releases/download/JetBrains-Mono/SystemFont.cia) |
 
 
 ### Installing Custom Fonts
